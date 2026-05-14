@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Casion</title>
+</head>
+<body>
+    <main>
+        <h1>Казик</h1>
+        <div id="result">Нажмите "Играть"</div>
+        <div id="balance">Баланс: </div>
+        
+        <button id="playBtn">Играть</button>
+    
+        <script>
+            const WIN_CHANCE = 0.1;
+            const WIN_REWARD = 100;
+            const GAME_COST = 10;
+
+            let userBalance = 100;
+
+            const btn = document.getElementById("playBtn");
+            btn.addEventListener("click", function () {
+                btn.disabled = true;
+
+                if (userBalance < GAME_COST) {
+                    document.getElementById("result").textContent = "Деняг нема!";
+                        return;
+                    };
+                    
+                    const win = Math.random() < WIN_CHANCE;
+                    const reward = win ? WIN_REWARD : 0;
+                    
+                    userBalance = userBalance - GAME_COST + reward;
+                    
+                    const result = {
+                    balance: userBalance,
+                    outcome: win ? "🎉 WIN!" : "💀 LOSE!",
+                    reward: reward,
+                };
+                
+                document.getElementById("result").textContent = result.outcome;
+                document.getElementById("balance").textContent = "Баланс: " + result.balance;
+
+                console.log(`Result: ${result.balance} - ${result.outcome} - ${result.reward}`)
+                setTimeout(() => {
+                    btn.disabled = false;
+                }, 600);
+            });
+        </script>
+    </main>
+</body>
+</html>
